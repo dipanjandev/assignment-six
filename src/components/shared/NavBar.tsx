@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const NavBar = () => {
   return (
-    <div className="bg-gray-950 mb-15">
+    <div className="bg-gray-950 mb-5">
       <nav className="flex justify-between items-center container mx-auto my-5">
         <div className="flex items-center gap-1 font-semibold text-xl">
           <Image src={logo} height={20} alt="Gym Center Logo" />

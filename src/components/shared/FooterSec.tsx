@@ -4,7 +4,7 @@ import logo from "@/assets/logo.png";
 
 const FooterSec = () => {
   return (
-    <div className="bg-gray-950 mt-15">
+    <div className="bg-gray-950 mt-5">
       <div className="border border-gray-700"></div>
       <footer className="container mx-auto flex justify-between py-10">
         <div className="flex items-center gap-1 font-semibold text-xl">
