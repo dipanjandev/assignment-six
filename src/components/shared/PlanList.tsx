@@ -1,11 +1,28 @@
 import React, { useContext, useState } from "react";
 import PlanAddRemove from "./add_and_remove/PlanAddRemove";
 import { GymProvider } from "@/context/GymContext";
-import AddItemsCard from "./add_and_remove/AddItemsCard";
+import TodayPlanCard from "./add_and_remove/TodayPlanCard";
+import { IworkoutType } from "@/types/workout.type";
+import { toast } from "react-toastify";
+
+interface GymContextType {
+  todaysPlan: IworkoutType[];
+  saveLater: IworkoutType[];
+  setTodaysPlan: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
+  setSaveLater: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
+}
 
 const PlanList = () => {
-  const { todaysPlan, saveLater } = useContext(GymProvider);
+  const { todaysPlan, saveLater, setTodaysPlan } = useContext(
+    GymProvider,
+  ) as GymContextType;
   const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+
+  const handleMarkDone = (id: number) => {
+    setTodaysPlan((prev) => prev.filter((item) => item.id !== id));
+
+    toast.success("Workout logged — nice work");
+  };
 
   const currentList = activeTab === "today" ? todaysPlan : saveLater;
 
@@ -88,9 +105,15 @@ const PlanList = () => {
       {currentList.length === 0 ? (
         <PlanAddRemove />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div>
           {currentList.map((workout) => (
-            <AddItemsCard key={workout.id} workout={workout} />
+            <TodayPlanCard
+              key={workout.id}
+              workout={workout}
+              activeTab={activeTab}
+              onDelete={() => {}}
+              onMarkDone={handleMarkDone}
+            />
           ))}
         </div>
       )}
