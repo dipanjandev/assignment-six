@@ -1,8 +1,13 @@
+"use client";
 import MyPlanCount from "@/components/shared/MyPlanCount";
 import PlanList from "@/components/shared/PlanList";
-import React from "react";
+import { GymProvider } from "@/context/GymContext";
+import React, { useContext } from "react";
 
-const myPlanPage = () => {
+const MyPlanPage = () => {
+  const { todaysPlan, saveLater } = useContext(GymProvider);
+  // console.log(todaysPlan, "todaysPlan");
+  // console.log(saveLater, "saveLater");
   return (
     <div>
       <section className="container mx-auto space-y-15 mt-8">
@@ -17,4 +22,4 @@ const myPlanPage = () => {
   );
 };
 
-export default myPlanPage;
+export default MyPlanPage;

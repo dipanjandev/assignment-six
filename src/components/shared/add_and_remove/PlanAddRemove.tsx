@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import Link from "next/link";
 
 const PlanAddRemove = () => {
   return (
@@ -14,9 +16,12 @@ const PlanAddRemove = () => {
       </p>
 
       {/* অ্যাকশন বাটন */}
-      <button className="mt-6 rounded-full bg-[#c8ff00] px-6 py-2.5 text-sm font-semibold text-black shadow-[0_0_20px_rgba(200,255,0,0.35)] transition-all hover:bg-[#b8eb00] hover:shadow-[0_0_25px_rgba(200,255,0,0.5)] active:scale-95">
+      <Link
+        href={"/"}
+        className="mt-6 rounded-full bg-[#c8ff00] px-6 py-2.5 text-sm font-semibold text-black shadow-[0_0_20px_rgba(200,255,0,0.35)] transition-all hover:bg-[#b8eb00] hover:shadow-[0_0_25px_rgba(200,255,0,0.5)] active:scale-95"
+      >
         Go to workouts
-      </button>
+      </Link>
     </div>
   );
 };

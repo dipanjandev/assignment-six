@@ -1,5 +1,3 @@
-import React from "react";
-
 const MyPlanCount = () => {
   return (
     <div className="grid grid-cols-3 bg-[#13161D] p-10 rounded-2xl">

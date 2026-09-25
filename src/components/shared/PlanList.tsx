@@ -1,17 +1,39 @@
-import React from "react";
-import PlanAddRemove from "./PlanAddRemove";
+import React, { useContext, useState } from "react";
+import PlanAddRemove from "./add_and_remove/PlanAddRemove";
+import { GymProvider } from "@/context/GymContext";
+import AddItemsCard from "./add_and_remove/AddItemsCard";
 
 const PlanList = () => {
+  const { todaysPlan, saveLater } = useContext(GymProvider);
+  const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+
+  const currentList = activeTab === "today" ? todaysPlan : saveLater;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         {/* বাম পাশের ট্যাব বাটন */}
         <div className="flex items-center rounded-xl border border-gray-800 bg-[#0e131f] p-1">
-          <button className="rounded-lg px-4 py-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-white">
-            Today&apos;s Plan
+          <button
+            onClick={() => setActiveTab("today")}
+            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-all ${
+              activeTab === "today"
+                ? "bg-[#1f2638] font-semibold text-white shadow-sm"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            Today&apos;s Plan{" "}
+            <span className="text-[#CCFF00]">{todaysPlan.length}</span>
           </button>
-          <button className="rounded-lg bg-[#1f2638] px-4 py-1.5 text-sm font-semibold text-white shadow-sm">
-            Saved
+          <button
+            onClick={() => setActiveTab("saved")}
+            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-all ${
+              activeTab === "saved"
+                ? "bg-[#1f2638] font-semibold text-white shadow-sm"
+                : "text-gray-400 hover:text-white"
+            }`}
+          >
+            Saved <span className="text-[#CCFF00]">{saveLater.length}</span>
           </button>
         </div>
 
@@ -63,7 +85,15 @@ const PlanList = () => {
           </div>
         </div>
       </div>
-      <PlanAddRemove />
+      {currentList.length === 0 ? (
+        <PlanAddRemove />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {currentList.map((workout) => (
+            <AddItemsCard key={workout.id} workout={workout} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import AddToPlan from "@/components/shared/buttons/AddToPlan";
+import SaveForLater from "@/components/shared/buttons/SaveForLater";
 import { IworkoutType } from "@/types/workout.type";
 import Image from "next/image";
 import React from "react";
@@ -135,35 +137,10 @@ const fitDitailsPage = async ({ params }: fitDitailsType) => {
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-3 pt-2">
             {/* Add to Plan Button */}
-            <button className="btn btn-sm h-10 px-4 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] text-black font-semibold border-none normal-case flex items-center gap-2">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              Add to today&apos;s plan
-            </button>
+            <AddToPlan library={library} />
 
             {/* Save for Later Button */}
-            <button className="btn btn-sm h-10 px-4 rounded-xl bg-[#141824] hover:bg-[#1d2233] text-gray-200 border border-gray-700 normal-case flex items-center gap-2">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-              </svg>
-              Save for later
-            </button>
+            <SaveForLater library={library} />
           </div>
         </div>
       </div>
