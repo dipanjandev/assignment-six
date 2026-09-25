@@ -22,9 +22,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-theme="dark"
       className={`${oswald.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <NavBar />
-        {children}
+        <main className="flex-1">{children}</main>
         <FooterSec />
       </body>
     </html>
