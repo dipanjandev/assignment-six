@@ -12,7 +12,7 @@ interface fitDitailsType {
 }
 
 const libraryData = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
   return await res.json();
 };
 
