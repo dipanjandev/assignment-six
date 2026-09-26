@@ -16,9 +16,11 @@ const TodayPlanCard = ({
   onMarkDone,
 }: TodayPlanCardProps) => {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-gray-800/80 bg-[#0d111a] p-4 transition-all hover:border-gray-700">
-      <div className="flex items-center gap-4">
-        <div className="relative h-20 w-32 shrink-0 overflow-hidden rounded-xl border border-gray-800">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-gray-800/80 bg-[#0d111a] p-3.5 sm:p-4 transition-all hover:border-gray-700">
+      {/* বাম পাশের অংশ: ছবি ও ইনফো */}
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* রেসপনসিভ থাম্বনেইল ইমেজ */}
+        <div className="relative h-18 w-24 sm:h-20 sm:w-32 shrink-0 overflow-hidden rounded-xl border border-gray-800">
           <Image
             src={workout.image}
             alt={workout.name}
@@ -27,16 +29,17 @@ const TodayPlanCard = ({
           />
         </div>
 
-        <div className="space-y-1">
-          <h3 className="text-lg font-bold tracking-wide text-white uppercase">
+        {/* টেক্সট ও স্ট্যাটস ইনফরমেশন */}
+        <div className="space-y-1 min-w-0">
+          <h3 className="text-base sm:text-lg font-bold tracking-wide text-white uppercase truncate">
             {workout.name}
           </h3>
-          <p className="text-sm font-medium text-gray-400">
+          <p className="text-xs sm:text-sm font-medium text-gray-400 truncate">
             {workout.equipment}
           </p>
 
-          <div className="flex items-center gap-3 pt-1 text-xs text-gray-300">
-            <span className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1 text-[11px] sm:text-xs text-gray-300">
+            <span className="flex items-center gap-1 shrink-0">
               <svg
                 className="h-3.5 w-3.5 text-[#ccff00]"
                 fill="none"
@@ -50,7 +53,7 @@ const TodayPlanCard = ({
               {workout.duration} min
             </span>
 
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1 shrink-0">
               <svg
                 className="h-3.5 w-3.5 text-[#ccff00]"
                 fill="currentColor"
@@ -61,7 +64,7 @@ const TodayPlanCard = ({
               {workout.caloriesBurned} kcal
             </span>
 
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1 shrink-0">
               <svg
                 className="h-3.5 w-3.5 text-[#ccff00]"
                 fill="none"
@@ -77,9 +80,10 @@ const TodayPlanCard = ({
         </div>
       </div>
 
-      <div className="flex items-center gap-3 self-end sm:self-center">
-        <Link href={`/${workout.id}`}>
-          <button className="rounded-full border border-gray-800 bg-[#161b26] px-5 py-2 text-xs font-semibold text-gray-200 transition-colors hover:border-gray-600 hover:text-white">
+      {/* ডান পাশের অংশ: বাটনসমূহ (মোবাইলে ফুল-উইডথ ও সুন্দর পার্টিশন) */}
+      <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 pt-2.5 sm:pt-0 border-t border-gray-850 sm:border-none w-full sm:w-auto">
+        <Link href={`/${workout.id}`} className="flex-1 sm:flex-initial">
+          <button className="w-full sm:w-auto rounded-full border border-gray-800 bg-[#161b26] px-3.5 sm:px-5 py-2 text-xs font-semibold text-gray-200 transition-colors hover:border-gray-600 hover:text-white">
             View Details
           </button>
         </Link>
@@ -87,7 +91,7 @@ const TodayPlanCard = ({
         {activeTab === "today" && (
           <button
             onClick={() => onMarkDone && onMarkDone(workout.id)}
-            className="flex items-center gap-1.5 rounded-full bg-[#ccff00] px-4 py-2 text-xs font-bold text-black transition-all hover:bg-[#b8e600] active:scale-95 shadow-[0_0_15px_rgba(204,255,0,0.25)]"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-full bg-[#ccff00] px-3 sm:px-4 py-2 text-xs font-bold text-black transition-all hover:bg-[#b8e600] active:scale-95 shadow-[0_0_15px_rgba(204,255,0,0.25)]"
           >
             <svg
               className="h-3.5 w-3.5 stroke-3"
@@ -97,13 +101,14 @@ const TodayPlanCard = ({
             >
               <polyline points="20 6 9 17 4 12" />
             </svg>
-            Mark as Done
+            <span className="hidden md:block">Mark as </span>Done
           </button>
         )}
 
         <button
           onClick={() => onDelete && onDelete(workout.id)}
-          className="p-1 text-gray-500 transition-colors hover:text-gray-300"
+          className="p-1.5 text-gray-500 hover:text-red-400 transition-colors rounded-lg hover:bg-gray-800/40 shrink-0"
+          aria-label="Delete item"
         >
           <svg
             className="h-4 w-4"

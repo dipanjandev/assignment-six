@@ -54,47 +54,59 @@ const PlanList = () => {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center rounded-xl border border-gray-800 bg-[#0e131f] p-1">
+    <div className="w-full space-y-6">
+      {/* ফিল্টার ও সর্টিং বার: মোবাইলে উপর-নিচ (flex-col), ট্যাব/পিসিতে পাশাপাশি (sm:flex-row) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* ট্যাব সুইচ বাটন */}
+        <div className="flex items-center justify-center sm:justify-start rounded-xl border border-gray-800 bg-[#0e131f] p-1 w-full sm:w-auto">
           <button
             onClick={() => setActiveTab("today")}
-            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-all ${
+            className={`flex-1 sm:flex-initial text-center rounded-lg px-3 sm:px-4 py-2 sm:py-1.5 text-xs sm:text-sm font-medium transition-all ${
               activeTab === "today"
                 ? "bg-[#1f2638] font-semibold text-white shadow-sm"
                 : "text-gray-400 hover:text-white"
             }`}
           >
             Today&apos;s Plan{" "}
-            <span className="text-[#CCFF00]">{todaysPlan.length}</span>
+            <span className="text-[#CCFF00] font-bold">
+              {todaysPlan.length}
+            </span>
           </button>
           <button
             onClick={() => setActiveTab("saved")}
-            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-all ${
+            className={`flex-1 sm:flex-initial text-center rounded-lg px-3 sm:px-4 py-2 sm:py-1.5 text-xs sm:text-sm font-medium transition-all ${
               activeTab === "saved"
                 ? "bg-[#1f2638] font-semibold text-white shadow-sm"
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            Saved <span className="text-[#CCFF00]">{saveLater.length}</span>
+            Saved{" "}
+            <span className="text-[#CCFF00] font-bold">{saveLater.length}</span>
           </button>
         </div>
 
-        <fieldset className="fieldset">
-          <legend className="fieldset-legend">Sort By</legend>
-          <select
-            value={sortBy}
-            onChange={(e) =>
-              setSortBy(e.target.value as "duration" | "calories" | "rating")
-            }
-            className="select w-50"
-          >
-            <option value="duration">Duration</option>
-            <option value="calories">Calories</option>
-            <option value="rating">Rating</option>
-          </select>
-        </fieldset>
+        {/* সর্ট ড্রপডাউন এরিয়া */}
+        <div className="flex items-center justify-end w-full sm:w-auto">
+          <fieldset className="fieldset w-full sm:w-auto flex items-center justify-between sm:justify-end gap-2">
+            <legend className="fieldset-legend text-xs sm:text-sm text-gray-400">
+              Sort By
+            </legend>
+            <select
+              value={sortBy}
+              onChange={(e) =>
+                setSortBy(e.target.value as "duration" | "calories" | "rating")
+              }
+              className="select select-sm sm:select-md w-full sm:w-44 border border-gray-800 bg-[#0e131f] text-white rounded-xl focus:border-gray-700"
+            >
+              <option value="duration">Duration</option>
+              <option value="calories">Calories</option>
+              <option value="rating">Rating</option>
+            </select>
+          </fieldset>
+        </div>
       </div>
+
+      {/* কার্ড লিস্ট এরিয়া */}
       {sortedList.length === 0 ? (
         <PlanAddRemove />
       ) : (

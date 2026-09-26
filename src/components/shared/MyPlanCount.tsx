@@ -16,18 +16,35 @@ const MyPlanCount = () => {
   );
 
   return (
-    <div className="grid grid-cols-3 bg-[#13161D] p-10 rounded-2xl">
-      <div>
-        <p>Exercises</p>
-        <h4 className="text-5xl font-bold text-[#CCFF00]">{totalExercise}</h4>
+    <div className="grid grid-cols-1 sm:grid-cols-3 bg-[#13161D] p-5 sm:p-8 lg:p-10 rounded-2xl border border-gray-800/80 gap-6 sm:gap-0">
+      {/* Exercises */}
+      <div className="text-center sm:text-left">
+        <p className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">
+          Exercises
+        </p>
+        <h4 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#CCFF00] mt-1">
+          {totalExercise}
+        </h4>
       </div>
-      <div className="border-l-2 px-5 border-white/10">
-        <p>Minutes</p>
-        <h4 className="text-5xl font-bold">{minutesTotal}</h4>
+
+      {/* Minutes */}
+      <div className="text-center sm:text-left pt-4 sm:pt-0 border-t sm:border-t-0 sm:border-l-2 border-white/10 sm:px-6 lg:px-8">
+        <p className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">
+          Minutes
+        </p>
+        <h4 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-1">
+          {minutesTotal}
+        </h4>
       </div>
-      <div className="border-l-2 px-5 border-white/10">
-        <p>Calories</p>
-        <h4 className="text-5xl font-bold">{caloriesTotal}</h4>
+
+      {/* Calories */}
+      <div className="text-center sm:text-left pt-4 sm:pt-0 border-t sm:border-t-0 sm:border-l-2 border-white/10 sm:px-6 lg:px-8">
+        <p className="text-xs sm:text-sm font-medium text-gray-400 uppercase tracking-wider">
+          Calories
+        </p>
+        <h4 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-1">
+          {caloriesTotal}
+        </h4>
       </div>
     </div>
   );

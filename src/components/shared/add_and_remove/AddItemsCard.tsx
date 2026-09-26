@@ -1,6 +1,4 @@
-import React from "react";
-
-const AddItemsCard = ({ workout }) => {
+const AddItemsCard = ({ workout }: { workout: { name: string } }) => {
   return (
     <div>
       <h2>{workout.name}</h2>

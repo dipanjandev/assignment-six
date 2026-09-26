@@ -5,46 +5,50 @@ import React from "react";
 
 const LibraryCard = ({ workout }: { workout: IworkoutType }) => {
   return (
-    <Link href={`./${workout.id}`}>
-      <div className="card h-auto bg-[#141721] text-white shadow-xl rounded-2xl overflow-hidden cursor-pointer hover:border-[#ccff00] hover:border">
-        {/* Exercise Image */}
-        <figure className="w-full h-70">
+    <Link href={`./${workout.id}`} className="group block h-full">
+      <div className="card h-full bg-[#141721] text-white shadow-xl rounded-2xl overflow-hidden cursor-pointer border border-transparent hover:border-[#ccff00] transition-all duration-300 hover:-translate-y-1">
+        {/* Exercise Image: ফিক্সড h-70 এর বদলে রেসপনসিভ এসপেক্ট রেশিও এবং হাইট */}
+        <figure className="relative w-full aspect-16/10 sm:aspect-4/3 md:h-56 overflow-hidden">
           <Image
             src={workout.image}
             alt={workout.name}
             width={800}
             height={800}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </figure>
 
-        <div className="card-body p-4">
-          {/* Muscle Groups (DaisyUI Badges) */}
-          <div className="flex gap-2">
-            {workout.muscleGroups?.map((group: string) => (
-              <span
-                key={group}
-                className="badge badge-sm border-none bg-[#ccff00] text-black font-semibold"
-              >
-                {group}
-              </span>
-            ))}
+        <div className="card-body p-4 sm:p-5 flex flex-col justify-between">
+          <div>
+            {/* Muscle Groups (DaisyUI Badges) */}
+            <div className="flex flex-wrap gap-1.5">
+              {workout.muscleGroups?.map((group: string) => (
+                <span
+                  key={group}
+                  className="badge badge-sm border-none bg-[#ccff00] text-black font-semibold text-[10px] sm:text-xs px-2 py-0.5"
+                >
+                  {group}
+                </span>
+              ))}
+            </div>
+
+            {/* Title */}
+            <h2 className="card-title text-sm sm:text-base font-black uppercase tracking-wide mt-2 line-clamp-1">
+              {workout.name}
+            </h2>
+
+            {/* Equipment */}
+            <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+              {workout.equipment}
+            </p>
           </div>
 
-          {/* Title */}
-          <h2 className="card-title text-base font-black uppercase tracking-wide mt-2">
-            {workout.name}
-          </h2>
-
-          {/* Equipment */}
-          <p className="text-xs text-gray-400 -mt-1">{workout.equipment}</p>
-
-          {/* Stats */}
-          <div className="flex items-center gap-4 text-xs font-semibold mt-3 text-gray-200">
+          {/* Stats: ছোট স্ক্রিনে যেন র‍্যাপ হয়ে না ভাঙে */}
+          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-semibold mt-4 pt-2 border-t border-gray-800/60 text-gray-200">
             {/* Duration */}
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-[#ccff00]"
+                className="w-3.5 h-3.5 text-[#ccff00] shrink-0"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
@@ -63,7 +67,7 @@ const LibraryCard = ({ workout }: { workout: IworkoutType }) => {
             {/* Calories */}
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-[#ccff00]"
+                className="w-3.5 h-3.5 text-[#ccff00] shrink-0"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
@@ -81,7 +85,7 @@ const LibraryCard = ({ workout }: { workout: IworkoutType }) => {
             {/* Rating */}
             <span className="flex items-center gap-1">
               <svg
-                className="w-4 h-4 text-[#ccff00]"
+                className="w-3.5 h-3.5 text-[#ccff00] shrink-0"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"

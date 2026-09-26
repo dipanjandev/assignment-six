@@ -4,13 +4,22 @@ import PlanList from "@/components/shared/PlanList";
 
 const MyPlanPage = () => {
   return (
-    <div>
-      <section className="container mx-auto space-y-15 mt-8">
-        <div>
-          <h1 className="text-5xl font-semibold">MY PLAN</h1>
-          <p>Cap of five lifts for today. Finish them, then load more.</p>
+    <div className="min-h-screen text-white pb-12 sm:pb-16">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12 mt-6 sm:mt-10">
+        {/* হেডিং ও সাবটাইটেল: মোবাইলে সেন্টারে, ট্যাবলেট/ডেস্কটপে বামে */}
+        <div className="space-y-2 sm:space-y-3 text-center sm:text-left">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-white">
+            MY PLAN
+          </h1>
+          <p className="text-sm sm:text-base text-gray-400 max-w-xl mx-auto sm:mx-0">
+            Cap of five lifts for today. Finish them, then load more.
+          </p>
         </div>
+
+        {/* কাউন্ট সেকশন */}
         <MyPlanCount />
+
+        {/* প্ল্যান সেকশন */}
         <PlanList />
       </section>
     </div>
