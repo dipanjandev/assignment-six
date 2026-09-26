@@ -36,6 +36,23 @@ const PlanList = () => {
 
   const currentList = activeTab === "today" ? todaysPlan : saveLater;
 
+  const [sortBy, setSortBy] = useState<"duration" | "calories" | "rating">(
+    "duration",
+  );
+
+  const sortedList = [...currentList].sort((a, b) => {
+    if (sortBy === "duration") {
+      return a.duration - b.duration;
+    }
+    if (sortBy === "calories") {
+      return b.caloriesBurned - a.caloriesBurned;
+    }
+    if (sortBy === "rating") {
+      return b.rating - a.rating;
+    }
+    return 0;
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -63,61 +80,26 @@ const PlanList = () => {
           </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-400">Sort By</span>
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="flex items-center gap-2 rounded-xl border border-gray-800 bg-[#0e131f] px-3.5 py-1.5 text-sm font-normal text-white transition-colors hover:border-gray-700"
-            >
-              Choose Your Option
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu z-20 mt-2 w-40 rounded-xl border border-gray-800 bg-[#0e131f] p-1.5 text-sm shadow-xl"
-            >
-              <li
-                value={"duration"}
-                className="rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white px-6 py-3"
-              >
-                Duration
-              </li>
-              <li
-                value={"calories"}
-                className="rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white px-6 py-3"
-              >
-                Calories
-              </li>
-              <li
-                value={"exercises"}
-                className="rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white px-6 py-3"
-              >
-                Exercises
-              </li>
-            </ul>
-          </div>
-        </div>
+        <fieldset className="fieldset">
+          <legend className="fieldset-legend">Sort By</legend>
+          <select
+            value={sortBy}
+            onChange={(e) =>
+              setSortBy(e.target.value as "duration" | "calories" | "rating")
+            }
+            className="select w-50"
+          >
+            <option value="duration">Duration</option>
+            <option value="calories">Calories</option>
+            <option value="rating">Rating</option>
+          </select>
+        </fieldset>
       </div>
-      {currentList.length === 0 ? (
+      {sortedList.length === 0 ? (
         <PlanAddRemove />
       ) : (
-        <div>
-          {currentList.map((workout) => (
+        <div className="space-y-4">
+          {sortedList.map((workout) => (
             <TodayPlanCard
               key={workout.id}
               workout={workout}
