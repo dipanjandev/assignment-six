@@ -7,21 +7,38 @@ import { toast } from "react-toastify";
 
 const AddToPlan = ({ library }: { library: IworkoutType }) => {
   const workoutProvider = useContext(GymProvider);
-  // console.log(workoutProvider, "workoutProvider");
-  const { todaysPlan, setTodaysPlan } = workoutProvider as {
+
+  const { todaysPlan = [], setTodaysPlan } = workoutProvider as {
     todaysPlan: IworkoutType[];
     setTodaysPlan: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
   };
 
   const handleAddToPlan = () => {
-    // console.log("handle button worked", library);
-    setTodaysPlan([...todaysPlan, library]);
-    toast.success(`${library.name} Successfully add your today's Plan`);
+    // ডুপ্লিকেট চেক: ওয়ার্কআউটটি আগেই যুক্ত করা আছে কিনা
+    const isAlreadyAdded = todaysPlan.some((item) => item.id === library.id);
+
+    if (isAlreadyAdded) {
+      toast.info(`${library.name} is already in today's plan!`);
+      return;
+    }
+
+    // ৫টি ওয়ার্কআউটের লিমিট চেক (আপনার প্ল্যান অনুযায়ী Cap of 5)
+    if (todaysPlan.length >= 5) {
+      toast.warning(
+        "You have reached the maximum limit of 5 workouts for today!",
+      );
+      return;
+    }
+
+    // ফাংশনাল স্টেট আপডেট
+    setTodaysPlan((prev) => [...prev, library]);
+    toast.success(`${library.name} successfully added to today's plan!`);
   };
+
   return (
     <button
-      onClick={() => handleAddToPlan()}
-      className="btn btn-sm h-10 px-4 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] text-black font-semibold border-none normal-case flex items-center gap-2"
+      onClick={handleAddToPlan}
+      className="btn btn-sm h-10 px-4 rounded-xl bg-[#ccff00] hover:bg-[#b8e600] active:scale-95 transition-all text-black font-semibold border-none normal-case flex items-center gap-2 shadow-[0_0_15px_rgba(204,255,0,0.2)]"
     >
       <svg
         className="w-4 h-4"

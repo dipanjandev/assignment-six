@@ -10,15 +10,18 @@ import { IworkoutType } from "@/types/workout.type";
 interface GymContextType {
   todaysPlan: IworkoutType[];
   saveLater: IworkoutType[];
+  setActiveTab?: React.Dispatch<React.SetStateAction<"today" | "saved">>;
 }
 
 const NavBar = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-  const { todaysPlan = [], saveLater = [] } = useContext(
-    GymProvider,
-  ) as GymContextType;
+  const {
+    todaysPlan = [],
+    saveLater = [],
+    setActiveTab,
+  } = useContext(GymProvider) as GymContextType;
 
   return (
     <header className="sticky top-0 z-50 w-full bg-gray-950/80 backdrop-blur-md border-b border-gray-800/80">
@@ -60,6 +63,7 @@ const NavBar = () => {
         <div className="flex items-center gap-2.5 sm:gap-4">
           <Link
             href="/my-plan"
+            onClick={() => setActiveTab?.("today")}
             className="flex items-center gap-1.5 cursor-pointer text-xs sm:text-sm text-gray-300 hover:text-white"
           >
             <span className="hidden md:block">Plan</span>
@@ -70,6 +74,7 @@ const NavBar = () => {
 
           <Link
             href="/my-plan"
+            onClick={() => setActiveTab?.("saved")}
             className="flex items-center gap-1.5 cursor-pointer text-xs sm:text-sm text-gray-300 hover:text-white"
           >
             <span className="hidden md:block">Saved</span>

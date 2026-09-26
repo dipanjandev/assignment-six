@@ -10,13 +10,41 @@ interface GymContextType {
   saveLater: IworkoutType[];
   setTodaysPlan: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
   setSaveLater: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
+  activeTab?: "today" | "saved";
+  setActiveTab?: React.Dispatch<React.SetStateAction<"today" | "saved">>;
 }
 
-const PlanList = () => {
-  const { todaysPlan, saveLater, setTodaysPlan, setSaveLater } = useContext(
-    GymProvider,
-  ) as GymContextType;
-  const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
+interface PlanListProps {
+  activeTab?: "today" | "saved";
+  setActiveTab?: (tab: "today" | "saved") => void;
+}
+
+const PlanList = ({
+  activeTab: propActiveTab,
+  setActiveTab: propSetActiveTab,
+}: PlanListProps = {}) => {
+  const {
+    todaysPlan = [],
+    saveLater = [],
+    setTodaysPlan,
+    setSaveLater,
+    activeTab: contextActiveTab,
+    setActiveTab: contextSetActiveTab,
+  } = useContext(GymProvider) as GymContextType;
+
+  const [internalActiveTab, setInternalActiveTab] = useState<"today" | "saved">("today");
+
+  const activeTab = propActiveTab ?? contextActiveTab ?? internalActiveTab;
+
+  const handleTabChange = (tab: "today" | "saved") => {
+    if (propSetActiveTab) {
+      propSetActiveTab(tab);
+    }
+    if (contextSetActiveTab) {
+      contextSetActiveTab(tab);
+    }
+    setInternalActiveTab(tab);
+  };
 
   const handleMarkDone = (id: number) => {
     setTodaysPlan((prev) => prev.filter((item) => item.id !== id));
@@ -60,7 +88,7 @@ const PlanList = () => {
         {/* ট্যাব সুইচ বাটন */}
         <div className="flex items-center justify-center sm:justify-start rounded-xl border border-gray-800 bg-[#0e131f] p-1 w-full sm:w-auto">
           <button
-            onClick={() => setActiveTab("today")}
+            onClick={() => handleTabChange("today")}
             className={`flex-1 sm:flex-initial text-center rounded-lg px-3 sm:px-4 py-2 sm:py-1.5 text-xs sm:text-sm font-medium transition-all ${
               activeTab === "today"
                 ? "bg-[#1f2638] font-semibold text-white shadow-sm"
@@ -73,7 +101,7 @@ const PlanList = () => {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab("saved")}
+            onClick={() => handleTabChange("saved")}
             className={`flex-1 sm:flex-initial text-center rounded-lg px-3 sm:px-4 py-2 sm:py-1.5 text-xs sm:text-sm font-medium transition-all ${
               activeTab === "saved"
                 ? "bg-[#1f2638] font-semibold text-white shadow-sm"

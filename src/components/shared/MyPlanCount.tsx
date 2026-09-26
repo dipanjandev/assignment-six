@@ -1,17 +1,36 @@
+"use client";
 import { GymProvider } from "@/context/GymContext";
 import { IworkoutType } from "@/types/workout.type";
 import { useContext } from "react";
 
 interface GymContextType {
   todaysPlan: IworkoutType[];
+  saveLater: IworkoutType[];
+  activeTab?: "today" | "saved";
 }
 
-const MyPlanCount = () => {
-  const { todaysPlan = [] } = useContext(GymProvider) as GymContextType;
-  const totalExercise = todaysPlan.length;
-  const minutesTotal = todaysPlan.reduce((acc, crnt) => acc + crnt.duration, 0);
-  const caloriesTotal = todaysPlan.reduce(
-    (acc, crnt) => acc + crnt.caloriesBurned,
+interface MyPlanCountProps {
+  activeTab?: "today" | "saved";
+}
+
+const MyPlanCount = ({ activeTab: propActiveTab }: MyPlanCountProps = {}) => {
+  const {
+    todaysPlan = [],
+    saveLater = [],
+    activeTab: contextActiveTab = "today",
+  } = useContext(GymProvider) as GymContextType;
+
+  // একটিভ ট্যাব অনুযায়ী লিস্ট নির্বাচন (prop থাকলে prop, নয়তো context থেকে)
+  const activeTab = propActiveTab ?? contextActiveTab ?? "today";
+  const currentList = activeTab === "today" ? todaysPlan : saveLater;
+
+  const totalExercise = currentList.length;
+  const minutesTotal = currentList.reduce(
+    (acc, crnt) => acc + (Number(crnt.duration) || 0),
+    0,
+  );
+  const caloriesTotal = currentList.reduce(
+    (acc, crnt) => acc + (Number(crnt.caloriesBurned) || 0),
     0,
   );
 

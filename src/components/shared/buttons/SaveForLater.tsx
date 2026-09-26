@@ -6,25 +6,33 @@ import { toast } from "react-toastify";
 
 const SaveForLater = ({ library }: { library: IworkoutType }) => {
   const workoutProvider = useContext(GymProvider);
-  // console.log(workoutProvider, "workoutProvider");
-  const { saveLater, setSaveLater } = workoutProvider as {
+
+  const { saveLater = [], setSaveLater } = workoutProvider as {
     saveLater: IworkoutType[];
     setSaveLater: React.Dispatch<React.SetStateAction<IworkoutType[]>>;
   };
 
   const handleSaveForLater = () => {
-    // console.log("handle button worked", library);
-    setSaveLater([...saveLater, library]);
-    toast.success(`${library.name} Successfully add your today's Plan`);
+    // ডুপ্লিকেট চেক: আগেই সেভ করা থাকলে পুনরায় ঢুকবে না
+    const isAlreadySaved = saveLater.some((item) => item.id === library.id);
+
+    if (isAlreadySaved) {
+      toast.info(`${library.name} is already in saved list!`);
+      return;
+    }
+
+    // ফাংশনাল আপডেট (prev state থেকে সঠিক ডেটা নেওয়া)
+    setSaveLater((prev) => [...prev, library]);
+    toast.success(`${library.name} added to Saved list!`);
   };
 
   return (
     <button
-      onClick={() => handleSaveForLater()}
+      onClick={handleSaveForLater}
       className="btn btn-sm h-10 px-4 rounded-xl bg-[#141824] hover:bg-[#1d2233] text-gray-200 border border-gray-700 normal-case flex items-center gap-2"
     >
       <svg
-        className="w-4 h-4"
+        className="w-4 h-4 text-[#ccff00]"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"

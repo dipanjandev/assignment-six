@@ -1,8 +1,14 @@
 "use client";
 import MyPlanCount from "@/components/shared/MyPlanCount";
 import PlanList from "@/components/shared/PlanList";
+import { GymProvider, GymContextType } from "@/context/GymContext";
+import { useContext } from "react";
 
 const MyPlanPage = () => {
+  const { activeTab = "today", setActiveTab } = useContext(
+    GymProvider,
+  ) as GymContextType;
+
   return (
     <div className="min-h-screen text-white pb-12 sm:pb-16">
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12 mt-6 sm:mt-10">
@@ -17,10 +23,10 @@ const MyPlanPage = () => {
         </div>
 
         {/* কাউন্ট সেকশন */}
-        <MyPlanCount />
+        <MyPlanCount activeTab={activeTab} />
 
         {/* প্ল্যান সেকশন */}
-        <PlanList />
+        <PlanList activeTab={activeTab} setActiveTab={setActiveTab} />
       </section>
     </div>
   );
